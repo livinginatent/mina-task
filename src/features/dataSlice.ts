@@ -20,24 +20,31 @@ const xlsxSlice = createSlice({
       action: PayloadAction<{ len: string; status: string }>
     ) => {
       const highestId = state.xlsxData.reduce(
-        (maxId, row) => (row.id > maxId ? row.id : maxId),
+        (maxId, row) => (row[0] > maxId ? row[0] : maxId),
         0
       );
       const newId = highestId + 1;
-      const newData = {
-        id: newId,
-        len: action.payload.len,
-        wkt: "",
-        status: action.payload.status,
-      };
+      const newData = [
+        newId,
+        action.payload.len,
+        "", // Include the 'wkt' field with a default value or retrieve it from somewhere
+        action.payload.status,
+      ];
 
-      return {
-        ...state,
-        xlsxData: [...state.xlsxData, newData],
-      };
+      state.xlsxData.push(newData); // Modify the state directly
+    },
+    deleteData: (state, action: PayloadAction<number>) => {
+      // Find the index of the row to delete based on the 'id'
+      const rowIndexToDelete = state.xlsxData.findIndex(
+        (row) => row[0] === action.payload
+      );
+
+      if (rowIndexToDelete !== -1) {
+        state.xlsxData.splice(rowIndexToDelete, 1); // Remove the row
+      }
     },
   },
 });
 
-export const { setData,addData } = xlsxSlice.actions;
+export const { setData,addData, deleteData } = xlsxSlice.actions;
 export default xlsxSlice.reducer;

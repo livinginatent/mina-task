@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyledButtonWrapper, StyledMainWrapper } from "./styles";
 import { Button } from "../Button";
-import Modal from "../Modals/Modal";
 import { useDispatch, useSelector } from "react-redux"; // Import useDispatch
 import TableComponent from "./Table/Table";
 import { addData } from "@/features/dataSlice";
 import { RootState } from "@/store";
+import AddDataModal from "../Modals/addDataModal/AddDataModal";
 
 type Props = {};
 
 const DataTable = (props: Props) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const dispatch = useDispatch(); // Get the dispatch function
-    const xlsxData = useSelector((state: RootState) => state.data.xlsxData);
-
+  const dispatch = useDispatch();
+  const xlsxData = useSelector((state: RootState) => state.data.xlsxData);
 
   const openAddModal = () => {
     setIsAddModalOpen(true);
@@ -23,9 +22,9 @@ const DataTable = (props: Props) => {
     setIsAddModalOpen(false);
   };
 
-  const handleAddData = (data:any) => {
-    dispatch(addData(data)); // Dispatch the addData action with the data
-    console.log(xlsxData)
+  const handleAddData = (data: any) => {
+    dispatch(addData(data));
+    console.log(xlsxData);
   };
 
   return (
@@ -44,7 +43,7 @@ const DataTable = (props: Props) => {
         />
       </StyledButtonWrapper>
       <TableComponent />
-      <Modal
+      <AddDataModal
         openModal={isAddModalOpen}
         onAddData={handleAddData}
         onClose={closeAddModal}

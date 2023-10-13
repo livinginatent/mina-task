@@ -59,3 +59,8 @@ export const Select = styled.select`
 `;
 
 
+export const ErrorLabel = styled.p`
+color: red;
+font-size: 18px;
+`
+
