@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface XLSXState {
-  xlsxData: any[]; // Adjust the type according to your XLSX data structure
+  xlsxData: any[];
 }
 
 const initialState: XLSXState = {
@@ -24,27 +24,34 @@ const xlsxSlice = createSlice({
         0
       );
       const newId = highestId + 1;
-      const newData = [
-        newId,
-        action.payload.len,
-        "", // Include the 'wkt' field with a default value or retrieve it from somewhere
-        action.payload.status,
-      ];
+      const newData = [newId, action.payload.len, "", action.payload.status];
 
-      state.xlsxData.push(newData); // Modify the state directly
+      state.xlsxData.push(newData);
     },
     deleteData: (state, action: PayloadAction<number>) => {
-      // Find the index of the row to delete based on the 'id'
       const rowIndexToDelete = state.xlsxData.findIndex(
         (row) => row[0] === action.payload
       );
 
       if (rowIndexToDelete !== -1) {
-        state.xlsxData.splice(rowIndexToDelete, 1); // Remove the row
+        state.xlsxData.splice(rowIndexToDelete, 1);
+      }
+    },
+    editData: (
+      state,
+      action: PayloadAction<{ id: number; len: string; status: string }>
+    ) => {
+      const { id, len, status } = action.payload;
+
+      const rowIndexToEdit = state.xlsxData.findIndex((row) => row[0] === id);
+
+      if (rowIndexToEdit !== -1) {
+        state.xlsxData[rowIndexToEdit][1] = len; 
+        state.xlsxData[rowIndexToEdit][3] = status; 
       }
     },
   },
 });
 
-export const { setData,addData, deleteData } = xlsxSlice.actions;
+export const { setData, addData, deleteData, editData } = xlsxSlice.actions;
 export default xlsxSlice.reducer;
