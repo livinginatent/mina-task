@@ -64,8 +64,8 @@ const MapComponent = ({
         featureProjection: "EPSG:3857",
       });
 
-      vectorSource.current.clear();
-      vectorSource.current.addFeature(feature.current);
+      vectorSource?.current?.clear();
+      vectorSource?.current?.addFeature(feature.current);
 
       flyTo();
     }
@@ -74,7 +74,7 @@ const MapComponent = ({
   const flyTo = () => {
     const zoom = view.current?.getZoom() || 12;
     const duration = 2000;
-    const extent = feature.current?.getGeometry().getExtent();
+    const extent = feature.current?.getGeometry()?.getExtent();
 
     if (extent) {
       view.current?.animate(

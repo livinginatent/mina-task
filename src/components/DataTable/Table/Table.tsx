@@ -15,7 +15,7 @@ const TableComponent = ({}: TableProps) => {
   const tabulatorRef = useRef(null as ReactTabulator | null);
   const dispatch = useDispatch();
 
-  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedRow, setSelectedRow] = useState<any>();
 
   const columns = [
     { title: "ID", field: "id", headerFilter: "input", width: 120 },
@@ -35,7 +35,7 @@ const TableComponent = ({}: TableProps) => {
       },
     },
     {
-      formatter: (cell) => {
+      formatter: (cell:any) => {
         return "<button class='btn-edit'>Edit</button>";
       },
       width: 10,
@@ -49,7 +49,7 @@ const TableComponent = ({}: TableProps) => {
       },
     },
     {
-      formatter: (cell) => {
+      formatter: (cell:any) => {
         return "<button class='btn-map'>Map</button>";
       },
       field: "showOnMap",
@@ -113,8 +113,8 @@ const TableComponent = ({}: TableProps) => {
             rowData={selectedRow}
             onEditData={(editedData: {
               id: number;
-              len: string;
-              status: string;
+              len: number;
+              status: number;
             }) => {
               dispatch(editData(editedData));
               closeEditModal();

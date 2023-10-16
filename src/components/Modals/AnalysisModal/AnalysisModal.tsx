@@ -47,7 +47,7 @@ const AnalysisModal = ({ analysis, isOpen,onClose }: AnalysisModalProps) => {
       {
         label: "Total Length",
         data: [totalLenStatus0, totalLenStatus1, totalLenStatus2],
-        backgroundColor: ["red", "green", "blue"],
+        backgroundColor: ["#FBECB2", "#F8BDEB", "#5272F2"],
       },
     ],
   };
@@ -63,7 +63,7 @@ const AnalysisModal = ({ analysis, isOpen,onClose }: AnalysisModalProps) => {
     datasets: [
       {
         data: [status0Data.length, status1Data.length, status2Data.length],
-        backgroundColor: ["red", "green", "blue"],
+        backgroundColor: ["#FBECB2", "#F8BDEB", "#5272F2"],
       },
     ],
   };
