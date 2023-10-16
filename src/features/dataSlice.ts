@@ -17,7 +17,7 @@ const xlsxSlice = createSlice({
     },
     addData: (
       state,
-      action: PayloadAction<{ len: string; status: string }>
+      action: PayloadAction<{ len: number; status: number }>
     ) => {
       const highestId = state.xlsxData.reduce(
         (maxId, row) => (row[0] > maxId ? row[0] : maxId),
@@ -39,7 +39,7 @@ const xlsxSlice = createSlice({
     },
     editData: (
       state,
-      action: PayloadAction<{ id: number; len: string; status: string }>
+      action: PayloadAction<{ id: number; len: number; status: number }>
     ) => {
       const { id, len, status } = action.payload;
 

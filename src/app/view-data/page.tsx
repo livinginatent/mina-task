@@ -1,8 +1,6 @@
 "use client";
 import DataTable from "@/components/DataTable/DataTable";
-import TableComponent from "@/components/DataTable/Table/Table";
-import React, { useEffect, useRef } from "react";
-import { Tabulator } from "tabulator-tables";
+import React from "react";
 
 const Page = () => {
   return <DataTable />;

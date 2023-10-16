@@ -10,10 +10,10 @@ import {
   StyledUploadText,
 } from "./style";
 import Spinner from "@/components/Spinner";
-import { setData, } from "@/features/dataSlice"; // Add setXLSXData action
+import { setData, } from "@/features/dataSlice"; 
 import { RootState } from "@/store";
 import { useRouter } from "next/navigation";
-import * as XLSX from "xlsx"; // Import the xlsx library
+import * as XLSX from "xlsx"; 
 
 const UploadFiles = ({ style }: { style?: React.CSSProperties }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -39,7 +39,7 @@ const UploadFiles = ({ style }: { style?: React.CSSProperties }) => {
         const arrayBuffer = await file.arrayBuffer();
         const data = parseXLSXData(arrayBuffer);
 
-        // Dispatch the parsed data
+        
         if (data) {
           
           dispatch(setData(data));
@@ -53,7 +53,7 @@ const UploadFiles = ({ style }: { style?: React.CSSProperties }) => {
     }
   };
 
-  // Function to parse XLSX data
+  
   const parseXLSXData = (arrayBuffer:any) => {
     try {
       let data = [];

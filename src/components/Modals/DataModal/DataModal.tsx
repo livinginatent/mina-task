@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
 import {
   Input,
   InputLabel,
@@ -7,16 +7,18 @@ import {
   Select,
   Title,
   Form,
-  ErrorLabel, 
+  ErrorLabel,
 } from "./styles";
 import { Button } from "../../Button";
 import { ModalProps } from "./interface";
+import { useDispatch } from "react-redux";
+import { addData, editData } from "@/features/dataSlice";
 
-const AddDataModal = ({ openModal, onClose, onAddData }: ModalProps) => {
+const DataModal = ({ openModal, onClose, mode, rowData }: ModalProps) => {
   const [inputLen, setInputLen] = useState<number>(0);
   const [inputStatus, setInputStatus] = useState<number>(0);
   const [error, setError] = useState("");
-
+  const dispatch = useDispatch();
   const resetInputFields = () => {
     setInputLen(0);
     setInputStatus(0);
@@ -27,12 +29,19 @@ const AddDataModal = ({ openModal, onClose, onAddData }: ModalProps) => {
     if (openModal) {
       resetInputFields();
     }
-  }, [openModal]);
+    setInputLen(rowData?.len);
+    setInputStatus(rowData?.status);
+  }, [openModal, rowData]);
 
-  const handleAddData = (e: Event) => {
+  const handleAddData = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputLen && !isNaN(inputLen)) {
-      onAddData({ len: inputLen, status: inputStatus });
+      if (mode === "add") {
+        dispatch(addData({ len: inputLen, status: inputStatus }));
+      } else if (mode === "edit") {
+        const updatedData = { ...rowData, len: inputLen, status: inputStatus };
+        dispatch(editData(updatedData));
+      }
       onClose();
     } else {
       setError("Please enter a valid number for 'len'");
@@ -48,14 +57,14 @@ const AddDataModal = ({ openModal, onClose, onAddData }: ModalProps) => {
       {openModal && (
         <ModalContainer>
           <ModalContent>
-            <Title>Add new Data</Title>
+            <Title>{mode === "add" ? "Add new Data" : "Edit Data"}</Title>
             <Form onSubmit={handleAddData}>
               <InputLabel>Enter Len</InputLabel>
               <Input
-                type="number" // Use type "number" for the input
+                type="number"
                 value={inputLen}
                 onChange={(e) => {
-                  setInputLen(parseFloat(e.target.value)); 
+                  setInputLen(parseFloat(e.target.value));
                   setError("");
                 }}
               />
@@ -73,11 +82,11 @@ const AddDataModal = ({ openModal, onClose, onAddData }: ModalProps) => {
                 style={{ marginBottom: "4px", marginTop: "4px" }}
                 className="standard"
                 type="submit"
-                text={"Add"}
+                text={mode === "add" ? "Add" : "Edit"}
               />
               <Button
                 className="standard"
-                text={"Cancel"}
+                text="Cancel"
                 onClick={handleCloseModal}
               />
             </Form>
@@ -88,4 +97,4 @@ const AddDataModal = ({ openModal, onClose, onAddData }: ModalProps) => {
   );
 };
 
-export default AddDataModal;
+export default DataModal;

@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
 export const StyledMainWrapper = styled.main`
-  display: flex; 
+  display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #4b527e;
+  height: 100vh;
 `;
 
 export const StyledUploadWrapper = styled.section`

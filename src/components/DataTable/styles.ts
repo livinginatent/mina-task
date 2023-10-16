@@ -10,3 +10,10 @@ export const StyledButtonWrapper = styled.div`
   display: flex;
   background-color: #4F709C;
 `;
+
+export const StyledAnalysisWrapper = styled.div`
+display: flex;
+margin: 16px 0px 0px 12px;
+gap: 10px;
+width: 20%;
+`
