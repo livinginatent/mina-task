@@ -5,7 +5,7 @@ import { AnalysisModalProps } from "./interface";
 import {
   StyledAnalysisContainer,
   StyledAnalysisContent,
-  Title,
+
 } from "./styles";
 import { Bar, Pie } from "react-chartjs-2";
 import {  ArcElement, Tooltip, Legend } from "chart.js";

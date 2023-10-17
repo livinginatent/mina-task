@@ -12,59 +12,58 @@ import { TableProps } from "./interface";
 
 const TableComponent = ({}: TableProps) => {
   const xlsxData = useSelector((state: RootState) => state.data.xlsxData);
-  const tabulatorRef = useRef(null as ReactTabulator | null);
+  const tabulatorRef = useRef<any>();
   const dispatch = useDispatch();
 
   const [selectedRow, setSelectedRow] = useState<any>();
 
-  const columns = [
-    { title: "ID", field: "id", headerFilter: "input", width: 120 },
-    { title: "LEN", field: "len", headerFilter: "input", width: 240 },
-    { title: "WKT", field: "wkt", headerFilter: "input", width: 540 },
-    { title: "STATUS", field: "status", headerFilter: "input", width: 120 },
+const columns:any = [
+  { title: "ID", field: "id", headerFilter: "input", width: 120 },
+  { title: "LEN", field: "len", headerFilter: "input", width: 240 },
+  { title: "WKT", field: "wkt", headerFilter: "input", width: 540 },
+  { title: "STATUS", field: "status", headerFilter: "input", width: 120 },
 
-    {
-      formatter: "buttonCross",
-      width: 70,
-      align: "center",
-      headerSort: false,
-      cellClick: (e: Event, cell: any) => {
-        const row = cell.getRow();
-
-        dispatch(deleteData(row.getData().id));
-      },
+  {
+    formatter: "buttonCross",
+    width: 70,
+    align: "center",
+    headerSort: false,
+    cellClick: (e: Event, cell: any) => {
+      const row = cell.getRow();
+      dispatch(deleteData(row.getData().id));
     },
-    {
-      formatter: (cell:any) => {
-        return "<button class='btn-edit'>Edit</button>";
-      },
-      width: 10,
-      align: "center",
-      headerSort: false,
-      cellClick: (e: Event, cell: any) => {
-        const row = cell.getRow();
-        const rowData = row.getData();
-        setSelectedRow(rowData);
-        openEditModal();
-      },
+  },
+  {
+    formatter: (cell: any) => {
+      return "<button class='btn-edit'>Edit</button>";
     },
-    {
-      formatter: (cell:any) => {
-        return "<button class='btn-map'>Map</button>";
-      },
-      field: "showOnMap",
-      headerSort: false,
-      width: 100,
-      margin: 20,
-      align: "right",
-
-      cellClick: (e: Event, cell: any) => {
-        const row = cell.getRow();
-        const rowData = row.getData();
-        setSelectedRow(rowData);
-      },
+    width: 10,
+    align: "center",
+    headerSort: false,
+    cellClick: (e: Event, cell: any) => {
+      const row = cell.getRow();
+      const rowData = row.getData();
+      setSelectedRow(rowData);
+      openEditModal();
     },
-  ];
+  },
+  {
+    formatter: (cell: any) => {
+      return "<button class='btn-map'>Map</button>";
+    },
+    field: "showOnMap",
+    headerSort: false,
+    width: 100,
+    align: "right",
+    headerFilter: false, // Set headerFilter to false for this column
+    margin: 20,
+    cellClick: (e: Event, cell: any) => {
+      const row = cell.getRow();
+      const rowData = row.getData();
+      setSelectedRow(rowData);
+    },
+  },
+];
 
   const tabulatorData = xlsxData.map((row) => ({
     id: row[0],
@@ -111,14 +110,7 @@ const TableComponent = ({}: TableProps) => {
             onClose={closeEditModal}
             mode="edit"
             rowData={selectedRow}
-            onEditData={(editedData: {
-              id: number;
-              len: number;
-              status: number;
-            }) => {
-              dispatch(editData(editedData));
-              closeEditModal();
-            }}
+           
           />
         )}
         <SecondChild>
